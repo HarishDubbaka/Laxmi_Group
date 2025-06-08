@@ -1,0 +1,41 @@
+version: 0.2
+
+env:
+  variables:
+    DOMAIN: "nextwork"
+    DOMAIN_OWNER: "891377087712"
+    REPOSITORY: "laxmigroups-cicd"
+    REGION: "ap-south-1"
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+    commands:
+      - echo Installing AWS CLI...
+      - aws --version
+
+  pre_build:
+    commands:
+      - echo Getting CodeArtifact token...
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+          --domain $DOMAIN \
+          --domain-owner $DOMAIN_OWNER \
+          --region $REGION \
+          --query authorizationToken --output text)
+      - echo Token acquired and environment initialized.
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn -s settings.xml compile
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mvn -s settings.xml package
+
+artifacts:
+  files:
+    - target/nextwork-web-project.war
+  discard-paths: no
