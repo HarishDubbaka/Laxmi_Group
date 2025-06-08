@@ -16,14 +16,13 @@ phases:
       - aws --version
 
   pre_build:
-  commands:
-    - echo Logging into CodeArtifact
-    - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
-        --domain nextwork \
-        --domain-owner 891377087712 \
-        --region ap-south-1 \
-        --query authorizationToken --output text)
-
+    commands:
+      - echo Logging into CodeArtifact
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+          --domain $DOMAIN \
+          --domain-owner $DOMAIN_OWNER \
+          --region $REGION \
+          --query authorizationToken --output text)
 
   build:
     commands:
