@@ -15,7 +15,7 @@ phases:
       - echo Installing AWS CLI...
       - aws --version
 
-  pre_build:
+  build:
     commands:
       - echo Logging into CodeArtifact...
       - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
@@ -23,15 +23,8 @@ phases:
           --domain-owner $DOMAIN_OWNER \
           --region $REGION \
           --query authorizationToken --output text)
-
-  build:
-    commands:
       - echo Build started on `date`
       - mvn -s settings.xml compile
-
-  post_build:
-    commands:
-      - echo Build completed on `date`
       - mvn -s settings.xml package
 
 artifacts:
