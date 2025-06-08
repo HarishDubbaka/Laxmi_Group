@@ -17,7 +17,7 @@ phases:
 
   pre_build:
     commands:
-      - echo Logging into CodeArtifact
+      - echo Logging into CodeArtifact...
       - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
           --domain $DOMAIN \
           --domain-owner $DOMAIN_OWNER \
@@ -27,7 +27,6 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - cd Laxmi_Group
       - mvn -s settings.xml compile
 
   post_build:
@@ -37,5 +36,5 @@ phases:
 
 artifacts:
   files:
-    - Laxmi_Group/target/*.war
+    - target/*.war
   discard-paths: no
