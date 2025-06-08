@@ -27,6 +27,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
+      - cd Laxmi_Group
       - mvn -s settings.xml compile
 
   post_build:
@@ -36,5 +37,5 @@ phases:
 
 artifacts:
   files:
-    - target/nextwork-web-project.war
+    - Laxmi_Group/target/*.war
   discard-paths: no
